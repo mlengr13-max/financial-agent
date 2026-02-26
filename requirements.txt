@@ -1,0 +1,15 @@
+langchain
+langgraph
+langsmith
+openai
+tavily-python
+duckdb
+pandas
+boto3
+pydantic
+python-dotenv
+pypdf
+langchain-openai
+fastapi
+uvicorn
+python-multipart
