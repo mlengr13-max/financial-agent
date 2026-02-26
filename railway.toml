@@ -1,0 +1,9 @@
+[build]
+builder = "nixpacks"
+buildCommand = "pip install -r requirements.txt"
+
+[deploy]
+startCommand = "python app.py"
+numReplicas = 1
+restartPolicyMaxRetries = 10
+healthchecks = {enabled = true, path = "/health"}
