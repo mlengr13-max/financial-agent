@@ -1,0 +1,20 @@
+{
+  "name": "financial-agent",
+  "build": {
+    "builder": "dockerfile"
+  },
+  "deploy": {
+    "numReplicas": 1,
+    "sleepApplication": true,
+    "restartPolicyMaxRetries": 10
+  },
+  "env": {
+    "OPENAI_API_KEY": {
+      "description": "OpenAI API Key"
+    },
+    "TAVILY_API_KEY": {
+      "description": "Tavily API Key"
+    },
+    "PYTHONUNBUFFERED": "1"
+  }
+}
