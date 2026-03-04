@@ -179,13 +179,21 @@ Health check endpoint
 
 The financial agent follows this workflow:
 
-1. **User Input** - Submit a financial query through the web UI or API
+1. **User Input** - Submit a financial query through the web UI using:
+   - Manual query entry in the text field
+   - **Example Queries** - Click any example query to auto-fill and auto-analyze
 2. **Extract Segment** - Identifies the financial segment from the query
 3. **SQL Query** - Retrieves financial data from DuckDB database
 4. **Document Analysis** - Extracts insights from JSON earnings data
 5. **Market Research** - Gathers market trends using web search (Tavily)
 6. **Synthesize** - LLM generates executive summary with trends, risks, and recommendations
 7. **Display Results** - Shows comprehensive analysis report
+
+### Example Queries Feature
+Click on any example query in the "Example Queries" section to automatically:
+- Fill the query text field
+- Trigger analysis immediately
+- Display results in the report section
 
 ## Development
 
@@ -243,6 +251,12 @@ npm run lint
 
 ### Frontend Issues
 
+**Example queries not loading**
+- Ensure backend server is running on port 8000
+- Check browser console for API connection errors
+- Verify `NEXT_PUBLIC_API_URL=http://localhost:8000` in `frontend/.env.local`
+- Backend should respond to: `curl http://localhost:8000/api/query-examples`
+
 **Cannot reach backend API**
 - Ensure backend server is running on port 8000
 - Check `NEXT_PUBLIC_API_URL` configuration
@@ -282,10 +296,18 @@ Or connect your GitHub repo to Vercel for automatic deployments.
   - Pydantic - Data validation
 
 - **Frontend:**
-  - Next.js 14 - React framework
+  - Next.js 16 - React framework
   - TypeScript - Type safety
-  - Tailwind CSS - Styling
+  - Tailwind CSS v4 - Styling
   - Axios - HTTP client
+
+## Recent Improvements
+
+- **Interactive Example Queries** - Click any example query to auto-fill and auto-analyze
+- **Enhanced Error Handling** - Better error messages for frontend API connection issues
+- **Security Updates** - All npm vulnerabilities resolved (glob, marked packages)
+- **Tailwind CSS v4** - Updated to latest Tailwind CSS with improved PostCSS integration
+- **Improved TypeScript Types** - Better type safety in React components
 
 ## License
 
