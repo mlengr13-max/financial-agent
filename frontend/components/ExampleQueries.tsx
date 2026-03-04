@@ -10,19 +10,49 @@ interface ExampleQueriesProps {
 export const ExampleQueries: React.FC<ExampleQueriesProps> = ({ onSelectQuery }) => {
   const [examples, setExamples] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    apiClient
-      .getQueryExamples()
-      .then(setExamples)
-      .catch((e) => console.error('Failed to load examples:', e))
-      .finally(() => setLoading(false));
+    const loadExamples = async () => {
+      try {
+        setError(null);
+        const data = await apiClient.getQueryExamples();
+        setExamples(data);
+      } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : 'Failed to load example queries';
+        console.error('Failed to load examples:', err);
+        setError(errorMsg);
+        setExamples([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadExamples();
   }, []);
 
   if (loading) {
     return (
       <div className="bg-blue-50 rounded-lg p-4">
         <p className="text-gray-600">Loading example queries...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-red-50 rounded-lg p-4 mb-6">
+        <p className="text-red-700 font-medium">Error Loading Examples</p>
+        <p className="text-sm text-red-600 mt-1">{error}</p>
+        <p className="text-xs text-red-500 mt-2">Make sure the backend API is running on port 8000</p>
+      </div>
+    );
+  }
+
+  if (examples.length === 0) {
+    return (
+      <div className="bg-yellow-50 rounded-lg p-4 mb-6">
+        <p className="text-yellow-700">No example queries available</p>
       </div>
     );
   }

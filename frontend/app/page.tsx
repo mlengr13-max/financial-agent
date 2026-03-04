@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { QueryForm } from '@/components/QueryForm';
 import { ResultsDisplay } from '@/components/ResultsDisplay';
 import { ExampleQueries } from '@/components/ExampleQueries';
@@ -8,13 +8,14 @@ import { ExampleQueries } from '@/components/ExampleQueries';
 export default function Home() {
   const [report, setReport] = useState('');
   const [queryValue, setQueryValue] = useState('');
+  const queryFormRef = useRef<{ submit: () => Promise<void> }>(null);
 
   const handleSelectQuery = (query: string) => {
     setQueryValue(query);
-    // Scroll to form
+    // Auto-submit after a short delay to ensure state is updated
     setTimeout(() => {
-      document.querySelector('textarea')?.focus();
-    }, 0);
+      queryFormRef.current?.submit();
+    }, 100);
   };
 
   return (
@@ -35,7 +36,7 @@ export default function Home() {
         <ExampleQueries onSelectQuery={handleSelectQuery} />
 
         {/* Query Form */}
-        <QueryForm onAnalysisComplete={setReport} />
+        <QueryForm ref={queryFormRef} queryValue={queryValue} onAnalysisComplete={setReport} />
 
         {/* Results */}
         {report && <ResultsDisplay report={report} />}
